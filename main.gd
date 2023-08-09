@@ -18,14 +18,21 @@ func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	$HUD.show_game_over()
+	$Music.stop()
+	$DeathSound.play()
 
 
 func new_game():
+	# 移除旧的小兵
+	get_tree().call_group('mobs', 'queue_free')
+	
 	score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$HUD.update_score(score)
 	$HUD.show_message('Get Ready')
+	$Music.play()
+	
 
 func _on_mob_timer_timeout():
 	# 创建 Mob 场景的新实例
